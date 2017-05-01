@@ -1,3 +1,7 @@
+# todo
+- [] 使用pyinstaller 编译client (python3)
+- [x] 用户输入名字进入聊天
+
 # ZMQ Chat 👏 👏 👏 
 This is a simple chat client/server implementation to explore the base ZeroMQ
 API and, later, try integrating some of the higher level patterns from the

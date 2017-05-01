@@ -1,3 +1,4 @@
+#!python3
 import argparse
 import configparser
 import curses
@@ -53,7 +54,8 @@ def start_bottom_window(window, chat_sender):
         time.sleep(0.005)
 
 def main(stdscr):
-    config_file = args.config_file if args.config_file is not None else 'zmqchat.cfg'
+    #config_file = args.config_file if args.config_file is not None else 'zmqchat.cfg'
+    config_file =  'zmqchat.cfg'
     config = configparser.ConfigParser()
     config.read(config_file)
     config = config['default']
@@ -62,7 +64,7 @@ def main(stdscr):
     receiver.bind("inproc://clientchat")
     sender = zmq.Context().instance().socket(zmq.PAIR)
     sender.connect("inproc://clientchat")
-    client = ClientChat(args.username, config['server_host'],
+    client = ClientChat(username, config['server_host'],
                         config['chat_port'], receiver)
     client.run()
 
@@ -88,7 +90,7 @@ def main(stdscr):
     # and one for showing the message the user is about to send off
     top_pad = stdscr.subpad(division_line, window_width, 0, 0)
     bottom_pad = stdscr.subpad(window_height - division_line, window_width, division_line, 0)
-    
+
     top_thread = threading.Thread(target=start_top_window, args=(top_pad, display_receiver))
     top_thread.daemon = True
     top_thread.start()
@@ -103,7 +105,10 @@ def main(stdscr):
 
 if '__main__' == __name__:
     try:
-        args = parse_args()
+        # begin auth
+        #args = parse_args()
+        username=input("username:")
+        #username=raw_input("username:")
         wrapper(main)
     except KeyboardInterrupt as e:
         pass
